@@ -41,7 +41,7 @@ router.post('/add', (req, res, next) => {
       "genre": req.body.genre
     });
 
-    game.create(newGame, (err, game) => {
+    book.create(newGame, (err, books) => {
       if(err) {
         console.log(err);
         res.end(err);
@@ -53,18 +53,53 @@ router.post('/add', (req, res, next) => {
 
 // GET the Book Details page in order to edit an existing Book
 router.get('/:id', (req, res, next) => {
+ try {
+      // get a reference to the id from the url
+      let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+        // find one game by its id
+      book.findById(id, (err, books) => {
+        if(err) {
+          console.log(err);
+          res.end(error);
+        } else {
+          // show the game details view
+          res.render('books/details', {
+              title: 'Books Details',
+              books: books
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      res.redirect('/errors/404');
+    }
 });
 
 // POST - process the information passed from the details form and update the document
 router.post('/:id', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+ // get a reference to the id from the url
+    let id = req.params.id;
+
+     let updatedGame = game({
+       "_id": id,
+      "title": req.body.title,
+      //"description": req.body.description,
+      "price": req.body.price,
+      "author": req.body.author,
+      "genre": req.body.genre
+    });
+
+    book.update({_id: id}, updatedGame, (err) => {
+      if(err) {
+        console.log(err);
+        res.end(err);
+      } else {
+        // refresh the game List
+        res.redirect('/books');
+      }
+    });
 
 });
 
