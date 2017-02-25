@@ -1,3 +1,5 @@
+// books.js, Jason Huang, 300818592, Comp308-Midterm-Books 
+
 // modules required for routing
 let express = require('express');
 let router = express.Router();
@@ -57,13 +59,13 @@ router.get('/:id', (req, res, next) => {
       // get a reference to the id from the url
       let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
 
-        // find one game by its id
+        // find one books by its id
       book.findById(id, (err, books) => {
         if(err) {
           console.log(err);
           res.end(error);
         } else {
-          // show the game details view
+          // show the books details view
           res.render('books/details', {
               title: 'Books Details',
               books: books
@@ -96,7 +98,7 @@ router.post('/:id', (req, res, next) => {
         console.log(err);
         res.end(err);
       } else {
-        // refresh the game List
+        // refresh the books List
         res.redirect('/books');
       }
     });
@@ -114,7 +116,7 @@ router.get('/delete/:id', (req, res, next) => {
         console.log(err);
         res.end(err);
       } else {
-        // refresh the games list
+        // refresh the books list
         res.redirect('/books');
       }
     });
