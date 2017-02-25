@@ -33,12 +33,12 @@ res.render('books/details', {
 
 // POST process the Book Details page and create a new Book - CREATE
 router.post('/add', (req, res, next) => {
- let newGame = game({
-      "title": req.body.title,
-      //"description": req.body.description,
-      "price": req.body.price,
-      "author": req.body.author,
-      "genre": req.body.genre
+ let newGame = book({
+      "Title": req.body.title,
+      "Description": req.body.description,
+      "Price": req.body.price,
+      "Author": req.body.author,
+      "Genre": req.body.genre
     });
 
     book.create(newGame, (err, books) => {
@@ -82,13 +82,13 @@ router.post('/:id', (req, res, next) => {
  // get a reference to the id from the url
     let id = req.params.id;
 
-     let updatedGame = game({
-       "_id": id,
-      "title": req.body.title,
-      //"description": req.body.description,
-      "price": req.body.price,
-      "author": req.body.author,
-      "genre": req.body.genre
+     let updatedGame = book({
+      "_id": id,
+      "Title": req.body.title,
+      "Description": req.body.description,
+      "Price": req.body.price,
+      "Author": req.body.author,
+      "Genre": req.body.genre
     });
 
     book.update({_id: id}, updatedGame, (err) => {
